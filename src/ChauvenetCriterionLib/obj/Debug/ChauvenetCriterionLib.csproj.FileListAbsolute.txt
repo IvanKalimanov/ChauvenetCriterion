@@ -1,0 +1,5 @@
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\bin\Debug\ChauvenetCriterionLib.dll
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\bin\Debug\ChauvenetCriterionLib.pdb
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\obj\Debug\ChauvenetCriterionLib.csproj.CoreCompileInputs.cache
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\obj\Debug\ChauvenetCriterionLib.dll
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\obj\Debug\ChauvenetCriterionLib.pdb
