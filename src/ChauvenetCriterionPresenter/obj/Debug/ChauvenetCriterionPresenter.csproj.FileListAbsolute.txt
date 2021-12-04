@@ -10,3 +10,4 @@ C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionPresente
 C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionPresenter\bin\Debug\ChauvenetCriterionLib.dll
 C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionPresenter\bin\Debug\ChauvenetCriterionLib.pdb
 C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionPresenter\obj\Debug\ChauvenetCriterionPresenter.csproj.CopyComplete
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionPresenter\obj\Debug\ChauvenetCriterionPresenter.MainForm.resources
