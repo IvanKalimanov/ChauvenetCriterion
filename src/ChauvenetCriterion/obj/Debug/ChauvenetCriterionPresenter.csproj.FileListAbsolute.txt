@@ -1,0 +1,9 @@
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\bin\Debug\ChauvenetCriterion.exe.config
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\bin\Debug\ChauvenetCriterion.exe
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\bin\Debug\ChauvenetCriterion.pdb
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\obj\Debug\ChauvenetCriterionPresenter.csproj.AssemblyReference.cache
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\obj\Debug\ChauvenetCriterion.Properties.Resources.resources
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\obj\Debug\ChauvenetCriterionPresenter.csproj.GenerateResource.cache
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\obj\Debug\ChauvenetCriterionPresenter.csproj.CoreCompileInputs.cache
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\obj\Debug\ChauvenetCriterion.exe
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterion\obj\Debug\ChauvenetCriterion.pdb

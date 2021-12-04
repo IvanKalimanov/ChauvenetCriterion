@@ -2,7 +2,7 @@
 
 namespace ChauvenetCriterionLib
 {
-    public class Class1
+    public class ChauvenetCriterion
     {
     }
 }
