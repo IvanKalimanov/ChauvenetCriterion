@@ -16,5 +16,13 @@ namespace ChauvenetCriterionPresenter
         {
             InitializeComponent();
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            double n = 5;
+            double zh = Meta.Numerics.Functions.AdvancedMath.InverseErf((2*n-1)/(2*n)) * Math.Sqrt(2);
+
+            label1.Text = String.Format("{0,12:#.00000}", zh);
+        }
     }
 }

@@ -8,16 +8,16 @@ namespace ChauvenetCriterionLib
 {
     public static class Functions
     {
-        public static List<float> ReadSampleFromFile(string path)
+        public static List<double> ReadSampleFromFile(string path)
         {
             bool isCorrect;
 
             string[] lines = System.IO.File.ReadAllLines(path);
-            List<float> sample = new List<float>();
+            List<double> sample = new List<double>();
 
             foreach (string line in lines)
             {
-                isCorrect = float.TryParse(line, out float temp);
+                isCorrect = double.TryParse(line, out double temp);
 
                 if (!isCorrect)
                 {
@@ -28,6 +28,33 @@ namespace ChauvenetCriterionLib
             };
 
             return sample;
+        }
+
+        public static bool ChauvenetCriterion(List<double> samples, double doubtfulValue)
+        {
+            double mean = 0, sd = 0;
+            int n = samples.Count;
+
+            foreach (double sample in samples)
+            {
+                mean += sample;
+            }
+
+            mean /= n;
+
+            foreach (double sample in samples)
+            {
+                sd += Math.Pow(mean - sample, 2);
+            }
+
+            sd /= n - 1;
+            sd = Math.Sqrt(sd);
+
+            double probability = MathNet.Numerics.Distributions.Normal.CDF(mean, sd, doubtfulValue) * 2;
+
+            Console.WriteLine(probability);
+
+            return probability * n >= 0.5;
         }
     }
 }
