@@ -28,10 +28,20 @@ namespace ChauvenetCriterionLib
 
         public double GetSignifisance(double doubtfulValue)
         {
-            var distribution = new Meta.Numerics.Statistics.Distributions.NormalDistribution(GetCurrentMean(),
-                GetCurrentStandardDeviation());
+            double mean = GetCurrentMean();
+            var distribution = new Meta.Numerics.Statistics.Distributions.NormalDistribution(mean, GetCurrentStandardDeviation());
 
-            return distribution.LeftProbability(doubtfulValue) * 2;
+            double probability;
+
+            if (doubtfulValue >= mean)
+            {
+                probability = distribution.RightProbability(doubtfulValue) * 2;
+            } else
+            {
+                probability = distribution.LeftProbability(doubtfulValue) * 2;
+            }
+
+            return probability;
         }
 
         public double GetCurrentMean()
