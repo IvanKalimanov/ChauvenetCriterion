@@ -3,3 +3,4 @@ C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\bin\
 C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\obj\Debug\ChauvenetCriterionLib.csproj.CoreCompileInputs.cache
 C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\obj\Debug\ChauvenetCriterionLib.dll
 C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\obj\Debug\ChauvenetCriterionLib.pdb
+C:\Users\X1CARBON\source\repos\ChauvenetCriterion\src\ChauvenetCriterionLib\obj\Debug\ChauvenetCriterionLib.csproj.AssemblyReference.cache
