@@ -19,10 +19,40 @@ namespace ChauvenetCriterionPresenter
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            double n = 5;
-            double zh = Meta.Numerics.Functions.AdvancedMath.InverseErf((2*n-1)/(2*n)) * Math.Sqrt(2);
 
-            label1.Text = String.Format("{0,12:#.00000}", zh);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            // получаем выбранный файл
+            string filename = openFileDialog1.FileName;
+            // читаем файл в строку
+            string[] lines = System.IO.File.ReadAllLines(filename);
+            InitialSampleBox.Items.AddRange(lines);
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (InitialSampleBox.Items.Count == 0)
+            {
+                MessageBox.Show("Choose file with initial sample");
+                return;
+            }
+            pictureBox1.Image = Image.FromFile("../../images/arrow_right.png");
+            pictureBox1.Visible = true;
+            label1.Visible = true;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
