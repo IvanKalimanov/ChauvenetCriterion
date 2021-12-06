@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChauvenetCriterionLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,8 @@ namespace ChauvenetCriterionPresenter
 {
     public partial class MainForm : Form
     {
+        private  ChauvenetCriterion chauvenetCriterion;
+
         public MainForm()
         {
             InitializeComponent();
@@ -30,14 +33,19 @@ namespace ChauvenetCriterionPresenter
             string filename = openFileDialog1.FileName;
             // читаем файл в строку
             string[] lines = System.IO.File.ReadAllLines(filename);
+            InitialSampleBox.Items.Clear();
             InitialSampleBox.Items.AddRange(lines);
             // создаем класс для получения характеристик выборки
             var sample = new List<double>();
-            foreach (string line in lines)
+
+
+            for (int i = 0; i < lines.Length; i++)
             {
-                sample.Add(Convert.ToDouble(line));
+                sample.Add(Convert.ToDouble(lines[i]));
             }
-            var chauvenetCriterion = new ChauvenetCriterionLib.ChauvenetCriterion(sample);
+
+            chauvenetCriterion = new ChauvenetCriterion(sample);
+            RefreshChart();
 
             label2.Visible = true;
             label3.Visible = true;
@@ -71,9 +79,47 @@ namespace ChauvenetCriterionPresenter
                 MessageBox.Show("Choose file with initial sample");
                 return;
             }
+
+            if (chauvenetCriterion.ExcludeDoubtfulValue())
+            {
+                ProcessedSampleBox.Items.Clear();
+                ProcessedSampleBox.Items.AddRange(chauvenetCriterion.CurrentSample.Select(x => x.ToString()).ToArray());
+                RefreshChart();              
+            }
+
             pictureBox1.Image = Image.FromFile("../../images/arrow_right.png");
             pictureBox1.Visible = true;
             label1.Visible = true;
+        }
+
+        private void RefreshChart()
+        {
+            chart1.Series["ExcludedValues"].Points.Clear();
+            chart1.Series["CurrentSample"].Points.Clear();
+
+            for (int i = 0; i < chauvenetCriterion.InitialSample.Count; i++)
+            {
+                bool isExcluded = false;
+
+                for (int j = 0; j < chauvenetCriterion.ExcludedValues.Count; j++)
+                {
+                    if (Math.Abs(chauvenetCriterion.ExcludedValues[j] - chauvenetCriterion.InitialSample[i]) < 0.00001)
+                    {
+                        isExcluded = true;
+                        break;
+                    }
+                }
+
+                if (isExcluded)
+                {
+                    chart1.Series["ExcludedValues"].Points.AddXY(i, chauvenetCriterion.InitialSample[i]);
+                }
+                else
+                {
+                    chart1.Series["CurrentSample"].Points.AddXY(i, chauvenetCriterion.InitialSample[i]);
+                }
+            }
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -94,6 +140,24 @@ namespace ChauvenetCriterionPresenter
         private void label7_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string res = String.Empty;
+
+            for (int i = 0; i < chauvenetCriterion.Reports.Count; i++)
+            {
+                res += String.Format("Шаг {0:D}\n", i);
+                res += chauvenetCriterion.Reports[0].ToString();
+                res += "\n\n";
+            }
+            MessageBox.Show(res);
         }
     }
 }

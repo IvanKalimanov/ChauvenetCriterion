@@ -10,13 +10,48 @@ namespace ChauvenetCriterionLib
     {
         public List<double> InitialSample { get; }
         public List<double> CurrentSample { get; }
-        public          int N             { get; }
+        public List<ChauvenetCriterionReport> Reports { get; }
+        public List<double> ExcludedValues { get; }
+        public int N { get; }
 
         public ChauvenetCriterion(List<double> initialSample)
         {
-            InitialSample = initialSample;
+            InitialSample = initialSample.ToList();
             CurrentSample = initialSample;
+            Reports = new List<ChauvenetCriterionReport>();
+            ExcludedValues = new List<double>();
             N = initialSample.Count;
+        }
+
+
+        public bool ExcludeDoubtfulValue()
+        {
+            double doubtfulValue = GetDoubtfulValue();
+            double mean = GetCurrentMean();
+            double std = GetCurrentStandardDeviation();
+            double zh = GetCriticalValue();
+            double z = Math.Abs(doubtfulValue - mean) / std;
+
+            if (z - zh > 0.001)
+            {
+                ChauvenetCriterionReport report = new ChauvenetCriterionReport
+                {
+                    N = CurrentSample.Count,
+                    Mean = mean,
+                    StandardDeviation = std,
+                    CriticalValue = zh,
+                    ExcludedValue = doubtfulValue,
+                    Deviation = z,
+                    Signficance = GetSignificance(doubtfulValue)
+                };
+
+                Reports.Add(report);
+                CurrentSample.Remove(doubtfulValue);
+                ExcludedValues.Add(doubtfulValue);
+                return true;
+            }
+
+            return false;
         }
 
         public double GetCriticalValue()
@@ -72,6 +107,40 @@ namespace ChauvenetCriterionLib
             sd = Math.Sqrt(sd);
 
             return sd;
+        }
+
+        private double GetDoubtfulValue()
+        {
+            double minValue = CurrentSample.Min();
+            double maxValue = CurrentSample.Max();
+            double mean = GetCurrentMean();
+
+            if (Math.Abs(maxValue - mean) > Math.Abs(minValue - mean)) {
+                return maxValue;
+            }
+
+            return minValue;
+        }
+
+    }
+
+    public struct ChauvenetCriterionReport
+    {
+        public int N { get; set; }
+        public double CriticalValue { get; set; }
+        public double StandardDeviation { get; set; }
+        public double Deviation { get; set; }
+        public double Mean { get; set; }
+        public double Signficance { get; set; }
+        public double ExcludedValue { get; set; }
+
+
+        public override string ToString()
+        {
+            return String.Format("Размер выборки: {0:D}\nКритическое значение: {1:F4}\nОтклонение от среднего в стандартных отклонениях: {6:F4}\n" +
+                "Среднее: {2:F4}\nСтандратное отклонение: {3:F4}\nУровень значимости: {4:F4}\n" +
+                "Исключенное значение: {5:F4}",
+                N, CriticalValue, Mean, StandardDeviation, Signficance, ExcludedValue, Deviation);
         }
     }
 }

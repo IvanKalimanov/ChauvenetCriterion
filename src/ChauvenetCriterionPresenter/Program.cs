@@ -18,8 +18,6 @@ namespace ChauvenetCriterionPresenter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            int n = 5;
-            double zh = Meta.Numerics.Functions.AdvancedMath.InverseErf((2 * n - 1) / (2 * n)) * Math.Sqrt(2);
             Application.Run(new MainForm());
 
         }
