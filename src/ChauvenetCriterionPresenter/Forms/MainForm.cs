@@ -25,19 +25,20 @@ namespace ChauvenetCriterionPresenter
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void openFileButton_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
-            // получаем выбранный файл
-            string filename = openFileDialog1.FileName;
-            // читаем файл в строку
-            string[] lines = System.IO.File.ReadAllLines(filename);
-            InitialSampleBox.Items.Clear();
-            InitialSampleBox.Items.AddRange(lines);
-            // создаем класс для получения характеристик выборки
-            var sample = new List<double>();
 
+            string filename = openFileDialog1.FileName;
+
+            string[] lines = System.IO.File.ReadAllLines(filename);
+
+            InitialSampleBox.Items.Clear();
+            ProcessedSampleBox.Items.Clear();
+            InitialSampleBox.Items.AddRange(lines);
+
+            var sample = new List<double>();
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -51,10 +52,7 @@ namespace ChauvenetCriterionPresenter
             label3.Visible = true;
             label4.Visible = true;
             label5.Visible = true;
-            label6.Visible = true;
-            label7.Visible = true;
-            label8.Visible = true;
-            label9.Visible = true;
+
 
             double mean = chauvenetCriterion.GetCurrentMean();
             double sd = chauvenetCriterion.GetCurrentStandardDeviation();
@@ -63,16 +61,11 @@ namespace ChauvenetCriterionPresenter
             label4.Text = String.Format("{0:F4}", sd);
 
             double criticalValue = chauvenetCriterion.GetCriticalValue();
-            label8.Text = String.Format("{0:F4}", criticalValue);
-            label6.Text = String.Format("{0:F4}", chauvenetCriterion.GetSignificance(mean - sd * criticalValue));
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void excludeOutliersButton_Click(object sender, EventArgs e)
         {
             if (InitialSampleBox.Items.Count == 0)
             {
@@ -80,7 +73,18 @@ namespace ChauvenetCriterionPresenter
                 return;
             }
 
-            if (chauvenetCriterion.ExcludeDoubtfulValue())
+            bool wasExcluded = false;
+
+            if (oneOutlierCheckBox.Checked)
+            {
+                wasExcluded = chauvenetCriterion.ExcludeDoubtfulValue();
+            }
+            else
+            {
+                wasExcluded = chauvenetCriterion.ExcludeAllDoubtfulValues();
+            }
+
+            if (wasExcluded)
             {
                 ProcessedSampleBox.Items.Clear();
                 ProcessedSampleBox.Items.AddRange(chauvenetCriterion.CurrentSample.Select(x => x.ToString()).ToArray());
@@ -122,42 +126,19 @@ namespace ChauvenetCriterionPresenter
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
+        private void reportButton_Click(object sender, EventArgs e)
         {
             string res = String.Empty;
 
             for (int i = 0; i < chauvenetCriterion.Reports.Count; i++)
             {
                 res += String.Format("Шаг {0:D}\n", i);
-                res += chauvenetCriterion.Reports[0].ToString();
+                res += chauvenetCriterion.Reports[i].ToString();
                 res += "\n\n";
             }
             MessageBox.Show(res);
         }
+
+
     }
 }

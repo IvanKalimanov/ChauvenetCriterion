@@ -12,7 +12,7 @@ namespace ChauvenetCriterionLib
         public List<double> CurrentSample { get; }
         public List<ChauvenetCriterionReport> Reports { get; }
         public List<double> ExcludedValues { get; }
-        public int N { get; }
+
 
         public ChauvenetCriterion(List<double> initialSample)
         {
@@ -20,9 +20,19 @@ namespace ChauvenetCriterionLib
             CurrentSample = initialSample;
             Reports = new List<ChauvenetCriterionReport>();
             ExcludedValues = new List<double>();
-            N = initialSample.Count;
         }
 
+        public bool ExcludeAllDoubtfulValues()
+        {
+            bool isExcluded = true;
+
+            while (isExcluded)
+            {
+                isExcluded = ExcludeDoubtfulValue();
+            }
+
+            return !isExcluded;
+        }
 
         public bool ExcludeDoubtfulValue()
         {
@@ -56,6 +66,7 @@ namespace ChauvenetCriterionLib
 
         public double GetCriticalValue()
         {
+            int N = CurrentSample.Count();
             double condition = (double)(2 * N - 1) / (2 * N);
             double zh = Meta.Numerics.Functions.AdvancedMath.InverseErf(condition) * Math.Sqrt(2);
             return zh;
@@ -88,7 +99,7 @@ namespace ChauvenetCriterionLib
                 mean += sample;
             }
 
-            mean /= N;
+            mean /= CurrentSample.Count();
 
             return mean;
         }
@@ -103,7 +114,7 @@ namespace ChauvenetCriterionLib
                 sd += Math.Pow(mean - sample, 2);
             }
 
-            sd /= N - 1;
+            sd /= CurrentSample.Count() - 1;
             sd = Math.Sqrt(sd);
 
             return sd;
