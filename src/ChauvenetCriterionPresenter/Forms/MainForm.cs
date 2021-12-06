@@ -56,7 +56,7 @@ namespace ChauvenetCriterionPresenter
 
             double criticalValue = chauvenetCriterion.GetCriticalValue();
             label8.Text = String.Format("{0:F4}", criticalValue);
-            label6.Text = String.Format("{0:F4}", chauvenetCriterion.GetSignifisance(mean - sd * criticalValue));
+            label6.Text = String.Format("{0:F4}", chauvenetCriterion.GetSignificance(mean - sd * criticalValue));
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)

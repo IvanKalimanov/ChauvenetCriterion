@@ -26,7 +26,7 @@ namespace ChauvenetCriterionLib
             return zh;
         }
 
-        public double GetSignifisance(double doubtfulValue)
+        public double GetSignificance(double doubtfulValue)
         {
             double mean = GetCurrentMean();
             var distribution = new Meta.Numerics.Statistics.Distributions.NormalDistribution(mean, GetCurrentStandardDeviation());
