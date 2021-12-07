@@ -32,18 +32,24 @@ namespace ChauvenetCriterionPresenter
 
             string filename = openFileDialog1.FileName;
 
-            string[] lines = System.IO.File.ReadAllLines(filename);
+            List<double> sample;
+
+            try
+            {
+                sample = Functions.ReadSampleFromFile(filename);
+            }
+            catch
+            {
+                MessageBox.Show("Тестовый файл должен содержать вещественные числа!\n" +
+                    "Разделитель - запятая", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
 
             InitialSampleBox.Items.Clear();
             ProcessedSampleBox.Items.Clear();
-            InitialSampleBox.Items.AddRange(lines);
+            InitialSampleBox.Items.AddRange(sample.Select(x => x.ToString()).ToArray());
 
-            var sample = new List<double>();
-
-            for (int i = 0; i < lines.Length; i++)
-            {
-                sample.Add(Convert.ToDouble(lines[i]));
-            }
 
             chauvenetCriterion = new ChauvenetCriterion(sample);
             RefreshChart();
